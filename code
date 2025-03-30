@@ -1,0 +1,41 @@
+async function loadFullContainer() {
+    let scrollBox = document.querySelector(JS PATH);
+
+    if (!scrollBox) {
+        console.error("Nie znaleziono kontenera. Upewnij się, że jest on widoczny na ekranie.");
+        return;
+    }
+
+    async function scrollDown() {
+        let lastHeight = 0;
+        while (scrollBox.scrollHeight > lastHeight) {
+            lastHeight = scrollBox.scrollHeight;
+            scrollBox.scrollTop = lastHeight;
+            await new Promise(resolve => setTimeout(resolve, 1500));
+        }
+    }
+
+  await scrollDown();
+
+  function collectFollowers() {
+    let followers = new Set();
+    
+    let elements = document.querySelectorAll("a[role='link'] span[dir='auto']");
+
+    elements.forEach(el => {
+        let username = el.innerText.trim();
+        if (username) {
+            followers.add(username);
+        }
+    });
+
+    return followers;
+}
+
+let followers = collectFollowers();
+console.log("Lista obserwujących:", Array.from(followers).slice(2));
+
+
+}
+
+loadFullContainer();
